@@ -1,0 +1,12 @@
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\bin\Release\net6.0\WeeklyChallenge.Shared.deps.json
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\bin\Release\net6.0\WeeklyChallenge.Shared.dll
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\bin\Release\net6.0\WeeklyChallenge.Shared.pdb
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\obj\Release\net6.0\WeeklyChallenge.Shared.csproj.AssemblyReference.cache
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\obj\Release\net6.0\WeeklyChallenge.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\obj\Release\net6.0\WeeklyChallenge.Shared.AssemblyInfoInputs.cache
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\obj\Release\net6.0\WeeklyChallenge.Shared.AssemblyInfo.cs
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\obj\Release\net6.0\WeeklyChallenge.Shared.csproj.CoreCompileInputs.cache
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\obj\Release\net6.0\WeeklyChallenge.Shared.dll
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\obj\Release\net6.0\refint\WeeklyChallenge.Shared.dll
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\obj\Release\net6.0\WeeklyChallenge.Shared.pdb
+C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Shared\obj\Release\net6.0\ref\WeeklyChallenge.Shared.dll

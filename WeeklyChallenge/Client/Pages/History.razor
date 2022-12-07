@@ -1,0 +1,41 @@
+﻿@page "/history"
+@using System.Globalization;
+@inject IToDoService toDoService;
+@inject IUserService userService;
+
+<PageTitle>Abgeschlossene Tasks</PageTitle>
+
+<h3>Abgeschlossene Aufgaben</h3>
+<br />
+<div>
+    @foreach (var user in users)
+    {
+        <h3>@user.Name</h3>
+        @if (toDos.Where(x => x.PersonId == user.Id).ToList().Count == 0)
+        {
+            <p>Keine abgeschlossenen Aufgaben</p>
+        }
+        <ul>
+            @foreach (var todo in toDos.Where(x => x.PersonId == user.Id).ToList())
+            {
+                <li>Aufgabe: @todo.Name | Woche: @todo.WeekNumber | Abgeschlossen am: @todo.FinishedAt</li>
+            }
+        </ul>
+    }
+</div>
+
+
+@code {
+    private List<ToDo> toDos = new();
+    private List<User> users = new();
+
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        await toDoService.GetToDos();
+        await userService.GetUsers();
+
+        toDos = toDoService.ToDos.Where(x => x.Finished).ToList();
+        users = userService.Users;
+    }
+}
