@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\WeeklyChallenge.Server.props" />
-</Project>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WeeklyChallenge.Server.Data;
 
 namespace WeeklyChallenge.Server.Controllers
@@ -13,6 +14,7 @@ namespace WeeklyChallenge.Server.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         public async Task<ActionResult<List<ToDo>>> GetToDos()
         {
@@ -26,7 +28,6 @@ namespace WeeklyChallenge.Server.Controllers
             var toDos = await _context.ToDos.Where(x => x.PersonId.Equals(personId) && x.WeekNumber.Equals(weekNumber)).ToListAsync();
             return Ok(toDos);
         }
-
 
         [HttpGet("{weekNumber}")]
         public async Task<ActionResult<List<ToDo>>> GetActiveToDosOfWeek(int weekNumber)

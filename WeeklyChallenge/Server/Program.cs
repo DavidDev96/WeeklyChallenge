@@ -1,16 +1,25 @@
 global using WeeklyChallenge.Shared;
 global using Microsoft.EntityFrameworkCore;
 using WeeklyChallenge.Server.Data;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+// Oauth2.0
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 
 var app = builder.Build();
@@ -34,6 +43,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Oauth2.0
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();

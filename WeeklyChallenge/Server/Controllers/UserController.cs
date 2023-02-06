@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WeeklyChallenge.Server.Data;
-using WeeklyChallenge.Shared;
 
 namespace WeeklyChallenge.Server.Controllers
 {
@@ -15,6 +15,7 @@ namespace WeeklyChallenge.Server.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         public async Task<ActionResult<List<User>>> GetUsers()
         {

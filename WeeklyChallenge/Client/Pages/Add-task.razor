@@ -11,55 +11,68 @@
 
 <h3>Aufgabe hinzufügen:</h3>
 
-@if (CheckSubmit)
+<AuthorizeView>
+    <NotAuthorized>
+        <p>Du bist nicht eingelogt - Daten werden nicht geladen.</p>
+    </NotAuthorized>
+    <Authorized>
+    </Authorized>
+</AuthorizeView>
+
+
+@if (showSavedText)
 {
     <p class="alert-warning">Aufgabe gespeichert!</p>
 }
 
-<EditForm Model="toDo" OnSubmit="Submit">
+<EditForm Model="toDo">
     <div>
         <label for="name">Name:</label>
         <InputText id="name" @bind-Value="toDo.Name" class="form-control"></InputText>
     </div>
-    <div style="margin-top:10px;">
+    <div class="top-spacing">
         <label for="weekNumber">Woche (aktuelle KW ist @currentWeek):</label>
         <InputNumber id="weekNumber" min="1" max="56" @bind-Value="toDo.WeekNumber" class="form-control"></InputNumber>
     </div>
-    <div style="margin-top:10px;">
+    <div class="top-spacing">
         <label for="user">Wer soll die Aufgabe erledigen?</label>
-        <InputSelect style="width: 150px;" id="personId" @bind-Value="toDo.PersonId">
+        <InputSelect class="person-select" id="personId" @bind-Value="toDo.PersonId">
             @foreach (var user in users)
             {
-                <option value="@user.Id">@user.Name</option>
+                <option value="@user.Id">@user.FirstName</option>
             }
         </InputSelect>
     </div>
-    <button type="submit" disabled="@(AllValid() ? false : true)" class="btn btn-primary" style="margin-top: 10px;">Speichern</button>
+    <button type="button" @onclick="Save" disabled="@(AllValid() ? false : true)" class="btn btn-primary top-spacing">Speichern</button>
+    <br />
+    <br />
 </EditForm>
 
 @code {
     private ToDo toDo = new ToDo();
     private List<User> users = new List<User>();
 
-    public bool CheckSubmit = false;
+    public bool showSavedText = false;
 
     int currentWeek = ISOWeek.GetWeekOfYear(DateTime.Now);
+    int currentYear = ISOWeek.GetYear(DateTime.Now);
 
     protected override async Task OnInitializedAsync()
     {
         await userService.GetUsers();
-        users.Add(new User() { Id = "ALL", Name = "Alle", Deleted = false });
+        users.Add(new User() { Id = "ALL", FirstName = "Alle", Deleted = false });
         users.AddRange(userService.Users.Where(x => !x.Deleted).ToList());
 
         toDo.WeekNumber = currentWeek;
+        toDo.Year = currentYear;
     }
 
     private bool AllValid()
     {
-        return toDo.Name != "" && toDo.WeekNumber > 0 && toDo.WeekNumber <= 56;
+        return toDo.Name != "" && toDo.WeekNumber > 0 && toDo.WeekNumber <= 56 && toDo.Year != 0;
     }
 
-    void Submit()
+    private void Save()
     {
         toDo.Id = System.Guid.NewGuid().ToString();
         if (toDo.PersonId == "")
@@ -67,6 +80,22 @@
             toDo.PersonId = "ALL";
         }
         toDoService.CreateToDo(toDo);
-        CheckSubmit = true;
+
+        toDo.Name = "";
+        toDo.WeekNumber = currentWeek;
+        toDo.PersonId = "";
+
+        ShowSavedText();
+    }
+
+    private async Task ShowSavedText()
+    {
+        await InvokeAsync(async () => 
+          {
+              showSavedText = true;
+              await Task.Delay(3_000);      // Show text for 3 seconds
+              showSavedText = false;
+              StateHasChanged();
+          });
     }
 }

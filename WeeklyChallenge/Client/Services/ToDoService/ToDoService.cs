@@ -41,12 +41,12 @@ namespace WeeklyChallenge.Client.Services.ToDoService
             throw new Exception("Todo not found!");
         }
 
-        public async Task<List<ToDo>> GetActiveToDosOfWeek(int weekNumber)
+        public async Task<List<ToDo>> GetActiveToDosOfWeek(int weekNumber, int year)
         {
             var result = await _http.GetFromJsonAsync<List<ToDo>>($"api/todo/{weekNumber}");
             if (result != null)
             {
-                return result.Where(x => !x.Finished).ToList();
+                return result.Where(x => !x.Finished && x.Year == year).ToList();
             }
             throw new Exception("Todo not found!");
         }

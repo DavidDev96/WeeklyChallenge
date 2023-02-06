@@ -1,0 +1,52 @@
+﻿button:disabled {
+    background-color: gray;
+}
+
+.top-spacing {
+    margin-top: 10px;
+}
+
+.bottom-spacing {
+    margin-bottom: 10px;
+}
+
+.top-spacing-big {
+    margin-top: 20px;
+}
+
+.row {
+    clear: both;
+}
+
+.row:hover {
+   background-color: #8080800f
+}
+
+li:nth-child(even) {
+   background-color: #8080800f
+}
+
+.column {
+    float: left;
+}
+
+.left {
+    width: 60%;
+}
+
+.right {
+    width: 40%;
+}
+
+.finish-icon {
+    color: green;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.delete-icon {
+    color: red;
+    cursor: pointer;
+    font-size: 22px;
+    margin-left: 20px;
+}

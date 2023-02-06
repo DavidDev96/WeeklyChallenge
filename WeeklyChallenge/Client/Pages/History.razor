@@ -6,36 +6,64 @@
 <PageTitle>Abgeschlossene Tasks</PageTitle>
 
 <h3>Abgeschlossene Aufgaben</h3>
-<br />
-<div>
-    @foreach (var user in users)
-    {
-        <h3>@user.Name</h3>
-        @if (toDos.Where(x => x.PersonId == user.Id).ToList().Count == 0)
+
+<AuthorizeView>
+    <NotAuthorized>
+        <p>Du bist nicht eingelogt - Daten werden nicht geladen.</p>
+    </NotAuthorized>
+    <Authorized>
+        @if (loading)
         {
-            <p>Keine abgeschlossenen Aufgaben</p>
+            <span>Aufgaben werden geladen ...</span>
         }
-        <ul>
-            @foreach (var todo in toDos.Where(x => x.PersonId == user.Id).ToList())
+
+        <div>
+            @foreach (var user in users)
             {
-                <li>Aufgabe: @todo.Name | Woche: @todo.WeekNumber | Abgeschlossen am: @todo.FinishedAt</li>
+                <h3 class="name-spacing">@user.FirstName</h3>
+                @if (toDos.Where(x => x.PersonId == user.Id).ToList().Count == 0)
+                {
+                    <p>Keine abgeschlossenen Aufgaben</p>
+                }
+                else
+                {
+                    <table class="top-spacing">
+                        <tr>
+                            <th>Aufgabe</th>
+                            <th class="left-inner-spacing">Woche</th>
+                            <th class="left-inner-spacing">Abgeschlossen</th>
+                        </tr>
+                        @foreach (var todo in toDos.Where(x => x.PersonId == user.Id).ToList())
+                        {
+                            <tr>
+                                <td class="first-column name-column">@todo.Name</td>
+                                <td class="second-column left-inner-spacing">@todo.WeekNumber / @todo.Year</td>
+                                <td class="third-column left-inner-spacing">@todo.FinishedAt?.ToString("dd/MM/yyyy")</td>
+                            </tr>
+                        }
+                    </table>
+                }
             }
-        </ul>
-    }
-</div>
+            <br />
+            <br />
+        </div>
+    </Authorized>
+</AuthorizeView>
 
 
 @code {
     private List<ToDo> toDos = new();
     private List<User> users = new();
-
+    private bool loading = false;
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
+        loading = true;
         await toDoService.GetToDos();
         await userService.GetUsers();
 
-        toDos = toDoService.ToDos.Where(x => x.Finished).ToList();
+        toDos = toDoService.ToDos.Where(x => x.Finished).OrderByDescending(x => x.Year).ThenByDescending(x => x.WeekNumber).ToList();
         users = userService.Users;
+        loading = false;
     }
 }

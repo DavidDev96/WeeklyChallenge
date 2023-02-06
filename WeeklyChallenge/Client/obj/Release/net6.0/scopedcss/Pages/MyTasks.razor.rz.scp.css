@@ -1,0 +1,52 @@
+button:disabled[b-zmfjije2bd] {
+    background-color: gray;
+}
+
+.top-spacing[b-zmfjije2bd] {
+    margin-top: 10px;
+}
+
+.bottom-spacing[b-zmfjije2bd] {
+    margin-bottom: 10px;
+}
+
+.top-spacing-big[b-zmfjije2bd] {
+    margin-top: 20px;
+}
+
+.row[b-zmfjije2bd] {
+    clear: both;
+}
+
+.row:hover[b-zmfjije2bd] {
+   background-color: #8080800f
+}
+
+li:nth-child(even)[b-zmfjije2bd] {
+   background-color: #8080800f
+}
+
+.column[b-zmfjije2bd] {
+    float: left;
+}
+
+.left[b-zmfjije2bd] {
+    width: 60%;
+}
+
+.right[b-zmfjije2bd] {
+    width: 40%;
+}
+
+.finish-icon[b-zmfjije2bd] {
+    color: green;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.delete-icon[b-zmfjije2bd] {
+    color: red;
+    cursor: pointer;
+    font-size: 22px;
+    margin-left: 20px;
+}

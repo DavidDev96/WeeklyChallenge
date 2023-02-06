@@ -13,8 +13,12 @@ namespace WeeklyChallenge.Shared
         [StringLength(200)]
         public string Id { get; set; } = string.Empty;
         [Required]
+        [StringLength(50)]
+        public string FirstName { get; set; } = string.Empty;
         [StringLength(200)]
-        public string Name { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        [StringLength(200)]
+        public string Email { get; set; } = string.Empty;
         public bool Deleted { get; set; } = false;
     }
 }

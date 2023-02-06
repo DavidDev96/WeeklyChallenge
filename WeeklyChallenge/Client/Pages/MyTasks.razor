@@ -1,0 +1,118 @@
+﻿@page "/"
+@using System.Globalization;
+@inject IToDoService toDoService;
+@inject IUserService userService;
+@inject NavigationManager navigationManager;
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims;
+
+<PageTitle>Meine Aufgaben</PageTitle>
+
+<h2>Meine Aufgaben in KW @currentWeek</h2>
+
+<AuthorizeView>
+    <NotAuthorized>
+        <p>Du bist nicht eingelogt - Daten werden nicht geladen.</p>
+    </NotAuthorized>
+
+    <Authorized>
+        <div class="top-spacing-big">
+            @foreach (var user in users.Where(x => x.FullName.Equals(context?.User?.Identity?.Name)))
+            {
+                @if (toDosOfWeek.Where(x => x.PersonId == user.Id).ToList().Count == 0)
+                {
+                    <p>Keine Aufgaben</p>
+                }
+                <ul>
+                    @foreach (var todo in toDosOfWeek.Where(x => x.PersonId == user.Id).ToList())
+                    {
+                        <li class="bottom-spacing">
+                            <div class="row">
+
+                                @if (this.deletingDict[todo.Id] == false)
+                                {
+                                    <span class="column left">@todo.Name</span>
+                                    <button type="button" style="width: auto" class="column right btn-secondary" @onclick="() => TryFinish(todo.Id)">Abschließen</button>
+                                }
+                                else
+                                {
+                                    <span class="column left">@todo.Name</span>
+                                    <div class="column right">
+                                        <span class="finish-icon oi oi-check" aria-hidden="true" @onclick="() => FinishToDo(todo.Id, todo)"></span>
+                                        <span class="delete-icon oi oi-circle-x" aria-hidden="true" @onclick="() => TryFinish(todo.Id)"></span>
+                                    </div>
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+
+        @if (loading)
+        {
+            <span>Aufgaben werden geladen ...</span>
+        }
+
+
+        <div class="top-spacing bottom-spacing">
+            <button type="button" disabled="@loading" class="btn btn-primary top-spacing" @onclick="Reload">Aktualisieren</button>
+        </div>
+    </Authorized>
+</AuthorizeView>
+<br />
+<br />
+
+@code {
+    private Dictionary<string, bool> deletingDict = new();
+    private List<ToDo> toDos = new();
+    private List<ToDo> toDosOfWeek = new();
+    private List<User> users = new();
+    private bool loading;
+    int currentWeek = ISOWeek.GetWeekOfYear(DateTime.Now);
+    int currentYear = ISOWeek.GetYear(DateTime.Now);
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        try
+        {
+            loading = true;
+            await toDoService.GetToDos();
+            await userService.GetUsers();
+
+            toDos = toDoService.ToDos.Where(x => !x.Finished).ToList();
+            toDosOfWeek = await toDoService.GetActiveToDosOfWeek(currentWeek, currentYear);
+            toDos.ForEach(x => deletingDict.Add(x.Id, false));
+            users = userService.Users.Where(x => !x.Deleted).ToList();
+            loading = false;
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    private void TryFinish(string id)
+    {
+        this.deletingDict[id] = !this.deletingDict[id];
+    }
+
+    private async void FinishToDo(string id, ToDo toDo)
+    {
+        toDo.Finished = true;
+        toDo.FinishedAt = DateTime.Now;
+        navigationManager.NavigateTo("", true);
+        await toDoService.FinishToDo(id);
+        navigationManager.NavigateTo("", true);
+        this.deletingDict[id] = true;
+    }
+
+    private void Reload()
+    {
+        navigationManager.NavigateTo("", true);
+    }
+
+}

@@ -1,0 +1,37 @@
+﻿button:disabled {
+    background-color: gray;
+}
+
+.top-spacing {
+    margin-top: 10px;
+}
+
+.bottom-spacing {
+    margin-bottom: 10px;
+}
+
+.top-spacing-big {
+    margin-top: 20px;
+}
+
+.row {
+    clear: both;
+}
+
+.column {
+    float: left;
+}
+
+.left {
+    width: 90%;
+}
+
+.right {
+    width: 10%;
+}
+
+.finish-icon {
+    color: green;
+    cursor: pointer;
+    font-size: 22px;
+}

@@ -1,3 +1,197 @@
+/* /Pages/Add-task.razor.rz.scp.css */
+button:disabled[b-8ydecbq6ul] {
+    background-color: gray;
+}
+
+.top-spacing[b-8ydecbq6ul] {
+    margin-top:10px;
+}
+
+.person-select[b-8ydecbq6ul] {
+    width: 150px;
+}
+/* /Pages/History.razor.rz.scp.css */
+.bottom-spacing[b-cz5sdqrfzc] {
+    margin-bottom: 10px;
+}
+
+.top-spacing[b-cz5sdqrfzc] {
+    margin-top: 10px;
+}
+
+.left-inner-spacing[b-cz5sdqrfzc] {
+    padding-left: 10px;
+}
+
+.name-column[b-cz5sdqrfzc] {
+    word-break: break-all;
+}
+
+tr:nth-child(even)[b-cz5sdqrfzc] {
+    background-color: #8080800f
+}
+
+table[b-cz5sdqrfzc] {
+    min-width: -webkit-fill-available;
+}
+
+tr td[b-cz5sdqrfzc] {
+    border-width: 0.5px;
+}
+
+.name-spacing[b-cz5sdqrfzc] {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.first-column[b-cz5sdqrfzc] {
+    width: 60vw;
+}
+
+.second-column[b-cz5sdqrfzc] {
+    width: 28vw;
+}
+
+.third-column[b-cz5sdqrfzc] {
+    width: 28vw;
+}
+/* /Pages/MyTasks.razor.rz.scp.css */
+button:disabled[b-zmfjije2bd] {
+    background-color: gray;
+}
+
+.top-spacing[b-zmfjije2bd] {
+    margin-top: 10px;
+}
+
+.bottom-spacing[b-zmfjije2bd] {
+    margin-bottom: 10px;
+}
+
+.top-spacing-big[b-zmfjije2bd] {
+    margin-top: 20px;
+}
+
+.row[b-zmfjije2bd] {
+    clear: both;
+}
+
+.row:hover[b-zmfjije2bd] {
+   background-color: #8080800f
+}
+
+li:nth-child(even)[b-zmfjije2bd] {
+   background-color: #8080800f
+}
+
+.column[b-zmfjije2bd] {
+    float: left;
+}
+
+.left[b-zmfjije2bd] {
+    width: 60%;
+}
+
+.right[b-zmfjije2bd] {
+    width: 40%;
+}
+
+.finish-icon[b-zmfjije2bd] {
+    color: green;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.delete-icon[b-zmfjije2bd] {
+    color: red;
+    cursor: pointer;
+    font-size: 22px;
+    margin-left: 20px;
+}
+/* /Pages/NotFinishedTasks.razor.rz.scp.css */
+.bottom-spacing[b-titi1tate7] {
+    margin-bottom: 10px;
+}
+
+.top-spacing[b-titi1tate7] {
+    margin-top: 10px;
+}
+
+.left-inner-spacing[b-titi1tate7] {
+    padding-left: 10px;
+}
+
+.name-column[b-titi1tate7] {
+    word-break: break-all;
+}
+
+tr:nth-child(even)[b-titi1tate7] {
+    background-color: #8080800f
+}
+
+table[b-titi1tate7] {
+    min-width: -webkit-fill-available;
+}
+
+tr td[b-titi1tate7] {
+    border-width: 0.5px;
+}
+
+.name-spacing[b-titi1tate7] {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.first-column[b-titi1tate7] {
+    width: 60vw;
+}
+
+.second-column[b-titi1tate7] {
+    width: 28vw;
+}
+
+
+
+
+
+/* /Pages/Tasks.razor.rz.scp.css */
+button:disabled[b-ilithamkek] {
+    background-color: gray;
+}
+
+.top-spacing[b-ilithamkek] {
+    margin-top: 10px;
+}
+
+.bottom-spacing[b-ilithamkek] {
+    margin-bottom: 10px;
+}
+
+.top-spacing-big[b-ilithamkek] {
+    margin-top: 20px;
+}
+
+.row[b-ilithamkek] {
+    clear: both;
+}
+
+.column[b-ilithamkek] {
+    float: left;
+}
+
+.left[b-ilithamkek] {
+    width: 90%;
+}
+
+.right[b-ilithamkek] {
+    width: 10%;
+}
+
+.finish-icon[b-ilithamkek] {
+    color: green;
+    cursor: pointer;
+    font-size: 22px;
+}
 /* /Shared/MainLayout.razor.rz.scp.css */
 .page[b-kjyh2zni7t] {
     position: relative;
@@ -10,11 +204,11 @@ main[b-kjyh2zni7t] {
 }
 
 .sidebar[b-kjyh2zni7t] {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-image: linear-gradient(180deg, #212529 0%, #212529 70%);
 }
 
 .top-row[b-kjyh2zni7t] {
-    background-color: #f7f7f7;
+    background-color: #212529;
     border-bottom: 1px solid #d6d5d5;
     justify-content: flex-end;
     height: 3.5rem;

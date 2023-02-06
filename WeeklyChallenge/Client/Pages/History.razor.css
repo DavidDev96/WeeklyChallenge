@@ -1,0 +1,44 @@
+﻿.bottom-spacing {
+    margin-bottom: 10px;
+}
+
+.top-spacing {
+    margin-top: 10px;
+}
+
+.left-inner-spacing {
+    padding-left: 10px;
+}
+
+.name-column {
+    word-break: break-all;
+}
+
+tr:nth-child(even) {
+    background-color: #8080800f
+}
+
+table {
+    min-width: -webkit-fill-available;
+}
+
+tr td {
+    border-width: 0.5px;
+}
+
+.name-spacing {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.first-column {
+    width: 60vw;
+}
+
+.second-column {
+    width: 28vw;
+}
+
+.third-column {
+    width: 28vw;
+}

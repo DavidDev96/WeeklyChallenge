@@ -3,50 +3,84 @@
 @inject IToDoService toDoService;
 @inject IUserService userService;
 @inject NavigationManager navigationManager;
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims;
 
-<PageTitle>Aufgaben</PageTitle>
+<PageTitle>Alle Aufgaben</PageTitle>
 
-<h2>Aufgaben in KW @currentWeek</h2>
+<h2>Aufgaben in KW @currentWeek / @currentYear</h2>
 
-<div style="margin-top: 20px;">
-    @foreach (var user in users)
-    {
-        <h3>@user.Name</h3>
-        @if (toDosOfWeek.Where(x => x.PersonId == user.Id).ToList().Count == 0)
-        {
-            <p>Keine Aufgaben</p>
-        }
-        <ul>
-            @foreach (var todo in toDosOfWeek.Where(x => x.PersonId == user.Id).ToList())
+<AuthorizeView>
+    <NotAuthorized>
+        <p>Du bist nicht eingelogt - Daten werden nicht geladen.</p>
+    </NotAuthorized>
+
+    <Authorized>
+        <div class="top-spacing-big">
+
+            @foreach (var user in users)
             {
-                <li>@todo.Name<span class="oi oi-check" style="margin:10px; color: green; cursor:pointer; font-size: 22px;" aria-hidden="true" @onclick="() => FinishToDo(todo.Id, todo)"></span></li>
+                <h3>@user.FirstName</h3>
+                @if (toDosOfWeek.Where(x => x.PersonId == user.Id).ToList().Count == 0)
+                {
+                    <p>Keine Aufgaben</p>
+                }
+                <ul>
+                    @foreach (var todo in toDosOfWeek.Where(x => x.PersonId == user.Id).ToList())
+                    {
+                        <li class="bottom-spacing">
+                            <div class="row">
+                                <span class="column left">@todo.Name</span>
+                            </div>
+                        </li>
+                    }
+                </ul>
             }
-        </ul>
-    }
-</div>
+        </div>
 
-<div>
-    <button type="button" disabled="@loading" class="btn btn-primary" style="margin-top: 10px;" @onclick="Reload">Aktualisieren</button>
-</div>
+        @if (loading)
+        {
+            <span>Aufgaben werden geladen ...</span>
+        }
+
+
+        <div class="top-spacing bottom-spacing">
+            <button type="button" disabled="@loading" class="btn btn-primary top-spacing" @onclick="Reload">Aktualisieren</button>
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+<br />
+<br />
 
 @code {
     private List<ToDo> toDos = new();
     private List<ToDo> toDosOfWeek = new();
     private List<User> users = new();
     private bool loading;
-
     int currentWeek = ISOWeek.GetWeekOfYear(DateTime.Now);
+    int currentYear = ISOWeek.GetYear(DateTime.Now);
 
     protected override async System.Threading.Tasks.Task OnInitializedAsync()
     {
-        loading = true;
-        await toDoService.GetToDos();
-        await userService.GetUsers();
+        try
+        {
+            loading = true;
+            await toDoService.GetToDos();
+            await userService.GetUsers();
 
-        toDos = toDoService.ToDos.Where(x => !x.Finished).ToList();
-        toDosOfWeek = await toDoService.GetActiveToDosOfWeek(currentWeek);
-        users = userService.Users.Where(x => !x.Deleted).ToList();
-        loading = false;
+            toDos = toDoService.ToDos.Where(x => !x.Finished).ToList();
+            toDosOfWeek = await toDoService.GetActiveToDosOfWeek(currentWeek, currentYear);
+            users = userService.Users.Where(x => !x.Deleted).ToList();
+            loading = false;
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
     }
 
     private async void FinishToDo(string id, ToDo toDo)

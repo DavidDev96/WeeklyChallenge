@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager Navigation
+
+<AuthorizeView>
+    <Authorized>
+        <button type="button" class="auth-button" @onclick="SignOutEventHandler">Sign out</button>
+    </Authorized>
+    <NotAuthorized>
+        <button type="button" class="auth-button" @onclick="SignInEventHandler">Sign in</button>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    void SignOutEventHandler()
+    {
+        Navigation.NavigateTo($"authentication/logout?post_logout_redirect_uri=/");
+    }
+
+    void SignInEventHandler()
+    {
+        Navigation.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}");
+    }
+}

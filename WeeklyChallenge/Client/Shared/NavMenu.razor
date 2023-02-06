@@ -1,17 +1,31 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">Weekly Challenge</a>
+        <a class="navbar-brand" href="">Weekly Challenge (V1.3)</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
 </div>
 
+
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-person" aria-hidden="true"></span> @context?.User?.Identity?.Name
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="tasks" Match="NavLinkMatch.All">
-                <span class="oi oi-check" aria-hidden="true"></span> Aufgaben
+            <NavLink class="nav-link" href="tasks">
+                <span class="oi oi-check" aria-hidden="true"></span> Alle Aufgaben
             </NavLink>
         </div>
         <div class="nav-item px-3">
@@ -20,10 +34,25 @@
             </NavLink>
         </div>
         <div class="nav-item px-3">
+            <NavLink class="nav-link" href="notFinishedTasks">
+                <span class="oi oi-circle-x" aria-hidden="true"></span> Nicht abgeschlossen
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
             <NavLink class="nav-link" href="history">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Abgeschlossen
             </NavLink>
         </div>
+ 
+        <AuthorizeView>
+            <Authorized>
+                <div class="nav-item px-3" style="cursor: pointer; margin-top: 40px">
+                    <NavLink class="nav-link" @onclick="SignOutEventHandler" Match="NavLinkMatch.All">
+                        <span class="oi oi-power-standby" aria-hidden="true"></span> Ausloggen
+                    </NavLink>
+                </div>
+            </Authorized>
+        </AuthorizeView>
     </nav>
 </div>
 
@@ -35,5 +64,11 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private async Task SignOutEventHandler()
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
     }
 }

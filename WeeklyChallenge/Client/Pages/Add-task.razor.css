@@ -1,0 +1,11 @@
+﻿button:disabled {
+    background-color: gray;
+}
+
+.top-spacing {
+    margin-top:10px;
+}
+
+.person-select {
+    width: 150px;
+}

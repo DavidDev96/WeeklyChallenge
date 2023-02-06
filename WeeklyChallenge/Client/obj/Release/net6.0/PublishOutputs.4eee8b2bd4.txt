@@ -1,1 +1,0 @@
-C:\DEV_Privat\WeeklyChallenge\WeeklyChallenge\Client\obj\Release\net6.0\browser-wasm\PubTmp\Out\web.config

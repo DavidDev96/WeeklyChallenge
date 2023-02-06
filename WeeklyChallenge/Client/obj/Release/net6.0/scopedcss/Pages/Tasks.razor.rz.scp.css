@@ -1,0 +1,37 @@
+button:disabled[b-ilithamkek] {
+    background-color: gray;
+}
+
+.top-spacing[b-ilithamkek] {
+    margin-top: 10px;
+}
+
+.bottom-spacing[b-ilithamkek] {
+    margin-bottom: 10px;
+}
+
+.top-spacing-big[b-ilithamkek] {
+    margin-top: 20px;
+}
+
+.row[b-ilithamkek] {
+    clear: both;
+}
+
+.column[b-ilithamkek] {
+    float: left;
+}
+
+.left[b-ilithamkek] {
+    width: 90%;
+}
+
+.right[b-ilithamkek] {
+    width: 10%;
+}
+
+.finish-icon[b-ilithamkek] {
+    color: green;
+    cursor: pointer;
+    font-size: 22px;
+}
